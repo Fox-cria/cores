@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>O Poder das Cores</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap');
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #000;
+            color: #fff;
+            font-family: 'Nunito', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        h1 {
+            position: relative;
+            font-size: 120px;
+            z-index: 2;
+            color: #fff;
+            text-align: center;
+            font-weight: normal;
+            font-family: 'Nunito', sans-serif;
+        }
+
+        h1::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 150%;
+            height: 150%;
+            background: radial-gradient(circle, rgba(255, 180, 36, 0.6), transparent);
+            filter: blur(100px);
+            animation: move 3s infinite;
+            z-index: 1;
+        }
+
+        @keyframes move {
+            0% { transform: translate(-50%, -50%) translateX(-20px); }
+            50% { transform: translate(-50%, -50%) translateX(20px); }
+            100% { transform: translate(-50%, -50%) translateX(-20px); }
+        }
+
+        .ball {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 2px solid white;
+            box-sizing: border-box;
+            z-index: 3;
+            cursor: pointer; /* Adiciona um cursor de ponteiro para indicar que é um botão */
+        }
+
+        /* Definindo as cores específicas para cada bola */
+        .white { background-color: #FFFFFF; }
+        .gray { background-color: #969696; }
+        .blue { background-color: #2F56FF; }
+        .green { background-color: #22D818; }
+        .yellow { background-color: #FFEE06; }
+        .red { background-color: #E10000; }
+        .orange { background-color: #FF8200; }
+        .purple { background-color: #A600FF; }
+        .pink { background-color: #FF0099; }
+        .brown { background-color: #64440D; }
+        .black { background-color: #000000; }
+    </style>
+</head>
+<body>
+    <h1>O Poder das Cores</h1>
+
+    <!-- Script para criar as bolas e movê-las -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const colors = ['white', 'gray', 'blue', 'green', 'yellow', 'red', 'orange', 'purple', 'pink', 'brown', 'black'];
+            const urls = {
+                'white': 'https://lh3.googleusercontent.com/pw/AP1GczO6ksdmTcPTdoUd2HICU58iIVysZYfLWJLZ4l0-D2fZp8qbHouDergfhCfNU7BKcGfF-HQRjr-3LiGlYnXLIlnuCdYK5rTeLiZ0JExru6_3bDEoi4On6u8biwKHDDyXg6S_sDIKWrG-_ZXdraOJaetd=w1919-h919-s-no-gm?authuser=5',
+                'gray': 'https://lh3.googleusercontent.com/pw/AP1GczPXtri7kIwvfuWMfoVn3seFUEmnLUE96P4B61tLM0vMBtM5ZQ7qkz1rZITaK1W9_PGpPwyy8wB1QH_IHljqOKanfp1a-9yk9kWCp527gHNm9bnYIVK55Tocls2tSHfiKNPgpiK3R3OjwHf2ADm9HtO6=w1919-h919-s-no-gm?authuser=5',
+                'blue': 'https://lh3.googleusercontent.com/pw/AP1GczNwCup82hwN9yhx5tWc7MwHqpyOlvHhTgtIUxDkXN5UKa4MVseao9zPjbHoIc4kL05cMIVrVDa7wsmm8uqnlzIiUY9Y1K81ddCCQI6iVffehpZwdfkKHTiqhOB-b_fFLJ9wmuoyP-bg6bYnL2wVpUvJ=w1919-h919-s-no-gm?authuser=5',
+                'green': 'https://lh3.googleusercontent.com/pw/AP1GczPXKxRDIwfLpfZOcdZyNqe73to23awJI-h-gewQOClkTkVhnV5u7HXg7CoKNu7SGqv-nFOZIzH9YgAp0JvmlfL-dBWY3JAvrfS7irm7I4O9-Gw1L-CM2REbMQ5bUF3fIV9DIufq5WDcgxRIDvT8uL34=w1919-h919-s-no-gm?authuser=5',
+                'yellow': 'https://lh3.googleusercontent.com/pw/AP1GczN8JyFZzHg5ZaahXWXNdn6CyEpSo55ew4PU6EGIxu-Ucndp0FaT0BXg-_rBX1cYoVrm8MklmOWOJ_nRSYRBs2ujNt3Be7C9UcwtnWQESmYlQNx4YbkfcguxUOwSZbUsWdoypS2okGa_Sjax7Hvver0G=w1919-h919-s-no-gm?authuser=5',
+                'red': 'https://lh3.googleusercontent.com/pw/AP1GczO0_wzdFz2cvrXN2wDdT6f4MiBLDFyNb8KQsIVHaQ5QaIeVLKBahvh4-MBA-IFyDh8qUyG55nbJHNy05VIAySnjaTiBdz2pBR07n9sHBGXMu7qYROGsSHlxvaiegkboguYKtARxOpx_RuU90Xsl1mOI=w1919-h919-s-no-gm?authuser=5',
+                'orange': 'https://lh3.googleusercontent.com/pw/AP1GczOGDR5hm9ARZpCyUpwiAN8zNhCWZ92_u01Car735LkTNkjx8PccUktBSGNzDlnmWWXJ0sv-meK6fEFN_5HUM1FvkG3VZrfngfctgnXN1P4REHi5kLZ_FcbfjjN-8lUZDwOl4TTiUDzj3HZtOM1gJpxD=w1919-h919-s-no-gm?authuser=5',
+                'purple': 'https://lh3.googleusercontent.com/pw/AP1GczPAk2ZYgfjjpFoSTJigrOytjSONIPFq3yuw-55WUTwK6iIETzNqBYxr3QvlTHdgTVeufGmo8GzEasHfOvdleN83gwBbIAqQKQdG-Q_WN2VKtW4E2-LZSop917AgHRIaRzbC9xSi3SNE9o8ZPWHfqRGh=w1919-h919-s-no-gm?authuser=5',
+                'pink': 'https://lh3.googleusercontent.com/pw/AP1GczMqszlAlJU1nQWgOFOREWtaezKoQ_j3ziz5viWJAKfSmDyR1sgAgG21zSJMfb_iVjgwL07t3Ie6v502f4URhGs9_WDZEYOq5wqXXecMC9HbcgMzk_MFKC3v1Gl6aQ6mNqFMXFAs1lQDD3zT_BgC778H=w1919-h919-s-no-gm?authuser=5',
+                'brown': 'https://lh3.googleusercontent.com/pw/AP1GczPDAS2sNQG9ctoRfiR6jocJsvw7FvvNq5PCBNnYOXyhRkBm6H5ZA4N4yu-pAcxfNDfZQ5N41sn4HOQokl0DXodk14f-HlZeaAVt0yxlVxf6tH39lNRwqRGbgAMVZ5AFu8VD3I50Vq2mmH5_cuQfAhfF=w1919-h919-s-no-gm?authuser=5',
+                'black': 'https://lh3.googleusercontent.com/pw/AP1GczNcqAXMhDXXmtHUhsZpIwb0lfzlwmeGVCNKxTTT5FJdx2hFFSQ691chQQ13Glkw25OL57-CQE4GRRBRWWjCJg_nauygCNmJ4r30HLuiWCPBqOiYY_pV02AlyV_NcRh9nW2242DRW8xaic3UMGyfiu8R=w1919-h919-s-no-gm?authuser=5'
+            };
+
+            function getRandomPosition(max) {
+                return Math.random() * max;
+            }
+
+            function getRandomDirection() {
+                const angle = Math.random() * Math.PI * 2;
+                return {
+                    x: Math.cos(angle),
+                    y: Math.sin(angle)
+                };
+            }
+
+            function moveBall(ball) {
+                const speed = Math.random() * 2 + 1;
+                const direction = getRandomDirection();
+                let xSpeed = direction.x * speed;
+                let ySpeed = direction.y * speed;
+
+                function animate() {
+                    const rect = ball.getBoundingClientRect();
+                    const maxX = window.innerWidth - ball.offsetWidth;
+                    const maxY = window.innerHeight - ball.offsetHeight;
+
+                    let newX = rect.left + xSpeed;
+                    let newY = rect.top + ySpeed;
+
+                    if (newX < 0 || newX > maxX) {
+                        xSpeed *= -1;
+                        newX = rect.left + xSpeed;
+                    }
+
+                    if (newY < 0 || newY > maxY) {
+                        ySpeed *= -1;
+                        newY = rect.top + ySpeed;
+                    }
+
+                    ball.style.left = newX + 'px';
+                    ball.style.top = newY + 'px';
+
+                    requestAnimationFrame(animate);
+                }
+
+                animate();
+            }
+
+            for (let i = 0; i < colors.length; i++) {
+                const ball = document.createElement('div');
+                ball.classList.add('ball', colors[i]);
+                document.body.appendChild(ball);
+
+                if (colors[i] !== 'black') {
+                    ball.style.left = getRandomPosition(window.innerWidth - 100) + 'px';
+                    ball.style.top = getRandomPosition(window.innerHeight - 100) + 'px';
+                } else {
+                    ball.style.left = (window.innerWidth / 2 - 50) + 'px';
+                    ball.style.top = (window.innerHeight / 2 - 50) + 'px';
+                }
+
+                // Adiciona evento de clique para redirecionar para o URL correspondente
+                ball.addEventListener('click', function() {
+                    window.location.href = urls[colors[i]];
+                });
+
+                moveBall(ball);
+            }
+        });
+    </script>
+</body>
+</html>
